@@ -30,7 +30,10 @@ export function setActiveInstance(vm: Component) {
     activeInstance = prevActiveInstance
   }
 }
-
+/**
+ * wk 绑定一些内部属性
+ * @param vm 
+ */
 export function initLifecycle(vm: Component) {
   const options = vm.$options
 
@@ -42,7 +45,7 @@ export function initLifecycle(vm: Component) {
     }
     parent.$children.push(vm)
   }
-
+  // wk 记录vue组件间的父子关系
   vm.$parent = parent
   vm.$root = parent ? parent.$root : vm
 

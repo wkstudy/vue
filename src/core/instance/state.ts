@@ -57,6 +57,7 @@ export function initState(vm: Component) {
     const ob = observe((vm._data = {}))
     ob && ob.vmCount++
   }
+  // wk 初始化 comouted watch
   if (opts.computed) initComputed(vm, opts.computed)
   if (opts.watch && opts.watch !== nativeWatch) {
     initWatch(vm, opts.watch)
@@ -167,7 +168,7 @@ export function getData(data: Function, vm: Component): any {
   }
 }
 
-const computedWatcherOptions = { lazy: true }
+const computedWatcherOptions = { lazy: true } // wk 这里让 comouted watcher初始化的时候不执行this.get()
 
 function initComputed(vm: Component, computed: Object) {
   // $flow-disable-line
@@ -184,6 +185,7 @@ function initComputed(vm: Component, computed: Object) {
 
     if (!isSSR) {
       // create internal watcher for the computed property.
+      // wk 这里仅仅初始化watcher，没有执行计算comouted
       watchers[key] = new Watcher(
         vm,
         getter || noop,
@@ -247,6 +249,7 @@ function createComputedGetter(key) {
     const watcher = this._computedWatchers && this._computedWatchers[key]
     if (watcher) {
       if (watcher.dirty) {
+        // wk 访问comouted属性时候才第一次执行了comnouted
         watcher.evaluate()
       }
       if (Dep.target) {
@@ -368,6 +371,7 @@ export function stateMixin(Vue: typeof Component) {
     }
     options = options || {}
     options.user = true
+    // wk 这里除非开发者传了options.lazy = true,否则都会直接执行一遍
     const watcher = new Watcher(vm, expOrFn, cb, options)
     if (options.immediate) {
       const info = `callback for immediate watcher "${watcher.expression}"`

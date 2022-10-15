@@ -43,6 +43,7 @@ export function initMixin(Vue: typeof Component) {
       // internal component options needs special treatment.
       initInternalComponent(vm, options as any)
     } else {
+      // wk 用户传入的options记录到vm.$options里
       vm.$options = mergeOptions(
         resolveConstructorOptions(vm.constructor as any),
         options || {},
@@ -66,6 +67,7 @@ export function initMixin(Vue: typeof Component) {
     initProps(vm, opts.props)
     initSetup(vm)
     callHook(vm, 'beforeCreate', undefined, false /* setContext */)
+    // wk 初始化 data computed watch
     initState(vm)
     initProvide(vm) // resolve provide after data/props
     callHook(vm, 'created')
