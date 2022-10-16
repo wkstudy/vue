@@ -78,6 +78,7 @@ export default {
 
   methods: {
     cacheVNode() {
+      // wk 缓存vnode
       const { cache, keys, vnodeToCache, keyToCache } = this
       if (vnodeToCache) {
         const { tag, componentInstance, componentOptions } = vnodeToCache
@@ -118,6 +119,7 @@ export default {
   },
 
   updated() {
+    // wk 每次更新的时候都会缓存当前渲染子组件实例的最新数据
     this.cacheVNode()
   },
 
@@ -147,6 +149,7 @@ export default {
             (componentOptions.tag ? `::${componentOptions.tag}` : '')
           : vnode.key
       if (cache[key]) {
+        // wk 这里直接用缓存的componentInstance
         vnode.componentInstance = cache[key].componentInstance
         // make current key freshest
         remove(keys, key)
@@ -158,6 +161,7 @@ export default {
       }
 
       // @ts-expect-error can vnode.data can be undefined
+      // wk 这里标记下此组件需要被keep-alive,便于在组件即将destory时另做处理
       vnode.data.keepAlive = true
     }
     return vnode || (slot && slot[0])

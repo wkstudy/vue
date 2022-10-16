@@ -79,6 +79,7 @@ const componentVNodeHooks = {
         // be processed after the whole patch process ended.
         queueActivatedComponent(componentInstance)
       } else {
+        // wk 这里做 keep-alive的处理
         activateChildComponent(componentInstance, true /* direct */)
       }
     }
@@ -90,6 +91,7 @@ const componentVNodeHooks = {
       if (!vnode.data.keepAlive) {
         componentInstance.$destroy()
       } else {
+        // wk 这里做keep-alive的处理
         deactivateChildComponent(componentInstance, true /* direct */)
       }
     }
