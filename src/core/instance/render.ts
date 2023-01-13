@@ -24,6 +24,7 @@ export function initRender(vm: Component) {
   const options = vm.$options
   const parentVnode = (vm.$vnode = options._parentVnode!) // the placeholder node in parent tree
   const renderContext = parentVnode && (parentVnode.context as Component)
+  // wk options._renderChildren是占位组件的子组件
   vm.$slots = resolveSlots(options._renderChildren, renderContext)
   vm.$scopedSlots = parentVnode
     ? normalizeScopedSlots(

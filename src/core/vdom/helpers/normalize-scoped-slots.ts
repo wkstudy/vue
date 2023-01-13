@@ -17,6 +17,7 @@ export function normalizeScopedSlots(
   const isStable = scopedSlots ? !!scopedSlots.$stable : !hasNormalSlots
   const key = scopedSlots && scopedSlots.$key
   if (!scopedSlots) {
+    // wk 占位组件中没有slot
     res = {}
   } else if (scopedSlots._normalized) {
     // fast path 1: child component re-render only, parent did not change

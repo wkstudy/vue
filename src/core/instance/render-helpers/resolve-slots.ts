@@ -21,6 +21,7 @@ export function resolveSlots(
     }
     // named slots should only be respected if the vnode was rendered in the
     // same context.
+    // wk 这里就是看的https://juejin.cn/post/6844903545607553032提到的slot位置不对的原因
     if (
       (child.context === context || child.fnContext === context) &&
       data &&
